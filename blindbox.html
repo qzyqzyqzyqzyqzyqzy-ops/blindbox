@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>朝思暮想的盲盒机</title>
+
+<!-- 现代感与可爱感并存的字体 -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(180deg, #c7f5ff 0%, #ffffff 100%);
+        font-family: "Nunito", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #008cba;
+        font-size: 40px;
+        padding-top: 18px;
+        margin-bottom: 16px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    /* 页面切换 */
+    .page { display: none; }
+    .active { display: block; }
+
+    /* 三列布局压缩空间 */
+    .three-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 20px;
+        padding: 10px 20px;
+    }
+
+    .column-title {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-family: "Poppins";
+        font-weight: 600;
+    }
+
+    /* 左右两列网格 */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .item {
+        text-align: center;
+    }
+
+    .item img {
+        width: 100%;
+        border-radius: 12px;
+        animation: breathe 3s ease-in-out infinite;
+        transition: transform .25s ease;
+    }
+
+    .item img:hover {
+        transform: scale(1.06) translateY(-6px);
+    }
+
+    .name {
+        font-weight: 700;
+        margin-top: 6px;
+        font-size: 16px;
+        font-family: "Poppins";
+    }
+
+    /* 中心列 */
+    .center-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding-top: 5px;
+    }
+
+    /* 隐藏款缩小 */
+    .rare-box img {
+        width: 70%;
+        max-width: 260px; /* 防止太宽 */
+        display: block;
+        margin: 0 auto;   /* 强制水平居中 */
+        border-radius: 18px;
+    }
+
+
+    .rare-box img:hover {
+        transform: scale(1.06) translateY(-6px);
+    }
+
+    /* 盲盒上移 + 稍微缩小 */
+    .blindbox {
+        width: 170px;
+        height: 170px;
+        cursor: pointer;
+        transition: transform .25s ease;
+        margin-top: -5px;
+    }
+
+    .blindbox:hover {
+        transform: scale(1.07);
+    }
+
+    .blindbox-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        animation: breathe 3s ease-in-out infinite;
+    }
+
+    /* 呼吸动画 */
+    @keyframes breathe {
+        0%   { transform: scale(1); }
+        50%  { transform: scale(1.03); }
+        100% { transform: scale(1); }
+    }
+
+    /* 按钮 */
+    button {
+        padding: 10px 26px;
+        background: #ff9800;
+        border: none;
+        border-radius: 14px;
+        font-size: 18px;
+        font-family: "Poppins";
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        letter-spacing: 0.5px;
+    }
+
+    button:hover {
+        transform: scale(1.06);
+    }
+
+    /* 结果页 */
+    .result-page {
+        text-align: center;
+        padding-top: 40px;
+    }
+
+    .reward-image {
+        width: 340px;
+        margin: 0 auto;
+        animation: rewardPop .8s ease forwards;
+        display: block;
+    }
+
+    @keyframes rewardPop {
+        0% { transform: scale(0.2); opacity: 0;}
+        60% { transform: scale(1.25); opacity: 1;}
+        100% { transform: scale(1);}
+    }
+
+    .result-text {
+        margin-top: 15px;
+        font-size: 28px;
+        color: #ff5722;
+        font-weight: 700;
+        font-family: "Poppins";
+    }
+</style>
+</head>
+
+<body>
+
+<!-- ---------------------- 页面1 ---------------------- -->
+<div id="page1" class="page active">
+
+    <h1>朝思暮想-盲盒套组</h1>
+
+    <div class="three-columns">
+
+        <!-- 左列：男生款 -->
+        <div>
+            <div class="column-title">朝斯</div>
+            <div class="grid">
+                <div class="item"><img src="男生1.png"><div class="name">暖阳狐憩</div></div>
+                <div class="item"><img src="男生2.png"><div class="name">惊喜偶遇</div></div>
+                <div class="item"><img src="男生3.png"><div class="name">温馨暖意</div></div>
+                <div class="item"><img src="男生4.png"><div class="name">午后闲趣</div></div>
+            </div>
+        </div>
+
+        <!-- 中间列 -->
+        <div class="center-column">
+            <div class="column-title">隐藏款-相依时光</div>
+            <div class="rare-box">
+                <img src="双人.png">
+            </div>
+
+            <div class="blindbox" id="blindbox">
+                <img src="盲盒.png" class="blindbox-img">
+            </div>
+
+            <button id="openBtn">打开盲盒</button>
+        </div>
+
+        <!-- 右列：女生款 -->
+        <div>
+            <div class="column-title">暮想</div>
+            <div class="grid">
+                <div class="item"><img src="女生1.png"><div class="name">春日气息</div></div>
+                <div class="item"><img src="女生2.png"><div class="name">橘白甜心</div></div>
+                <div class="item"><img src="女生3.png"><div class="name">俏皮心意</div></div>
+                <div class="item"><img src="女生4.png"><div class="name">花间巧遇</div></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ---------------------- 页面2 ---------------------- -->
+<div id="page2" class="page result-page">
+
+    <img id="rewardImg" class="reward-image" src="" alt="奖品" />
+
+    <div id="resultText" class="result-text"></div>
+
+    <button id="againBtn" class="again-btn">再抽一次</button>
+
+</div>
+
+<script>
+/* 奖池 */
+const prizes = [
+    "暖阳狐憩","惊喜偶遇","温馨暖意","午后闲趣",
+    "橘白甜心","俏皮心意","花间巧遇","相依时光",
+];
+
+const images = {
+    "暖阳狐憩": "男生1.png",
+    "惊喜偶遇": "男生2.png",
+    "温馨暖意": "男生3.png",
+    "午后闲趣": "男生4.png",
+    "春日气息": "女生1.png",
+    "橘白甜心": "女生2.png",
+    "俏皮心意": "女生3.png",
+    "花间巧遇": "女生4.png",
+    "隐藏款-相依时光": "双人.png"
+};
+
+document.getElementById("openBtn").onclick = () => {
+    const prize = prizes[Math.floor(Math.random()*prizes.length)];
+    document.getElementById("rewardImg").src = images[prize];
+    document.getElementById("resultText").textContent = `你抽到了：${prize} 🎉`;
+
+    page1.classList.remove("active");
+    page2.classList.add("active");
+};
+
+document.getElementById("againBtn").onclick = () => {
+    page2.classList.remove("active");
+    page1.classList.add("active");
+};
+</script>
+
+</body>
+</html>
